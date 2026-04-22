@@ -1,0 +1,24 @@
+services:
+  iceoryx2-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: iceoryx2-dev:ubuntu-24.04
+    container_name: iceoryx2-dev
+    hostname: iceoryx2-dev
+    ports:
+      - "22:22"
+    volumes:
+      - ..:/workspace
+      - ${HOME:-${USERPROFILE}}/.ssh/id_ed25519.pub:/root/.ssh/authorized_keys:ro
+      - cargo-registry:/root/.cargo/registry
+      - cargo-git:/root/.cargo/git
+      - cargo-target:/workspace/target
+      - cmake-build:/workspace/build
+    restart: unless-stopped
+
+volumes:
+  cargo-registry:
+  cargo-git:
+  cargo-target:
+  cmake-build:

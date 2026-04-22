@@ -1,0 +1,118 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "docker: cargo build",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-build.sh"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "docker: cargo build --release",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-build.sh", "--release"],
+      "group": "build",
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "docker: cargo build --examples",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-build.sh", "--examples"],
+      "group": "build",
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "docker: cargo test",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-test.sh"],
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "docker: cargo clippy",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-clippy.sh"],
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "docker: cargo fmt --check",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cargo-fmt-check.sh"],
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: cmake configure",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cmake-configure.sh"],
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "docker: cmake build",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/cmake-build.sh"],
+      "group": "build",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "docker: cmake test (ctest)",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["root@localhost", "bash", "/workspace/docker/scripts/ctest.sh"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: run publish_subscribe_publisher",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["-t", "root@localhost", "bash", "/workspace/docker/scripts/cargo-run-example.sh", "publish_subscribe_publisher"],
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "pubsub",
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: run publish_subscribe_subscriber",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["-t", "root@localhost", "bash", "/workspace/docker/scripts/cargo-run-example.sh", "publish_subscribe_subscriber"],
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "pubsub",
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: run publish_subscribe (pub+sub)",
+      "dependsOn": [
+        "docker: run publish_subscribe_subscriber",
+        "docker: run publish_subscribe_publisher"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker: shell",
+      "type": "shell",
+      "command": "ssh",
+      "args": ["-t", "root@localhost"],
+      "problemMatcher": []
+    }
+  ]
+}
